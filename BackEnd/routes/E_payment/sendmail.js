@@ -163,7 +163,7 @@ router.post('/', function(req, res) {
             // true for 465, false for other ports
             auth: {
                 user: 'bakeryute@gmail.com', // generated ethereal user
-                pass: 'rqwufehgnrffjjfa' // generated ethereal password
+                pass: 'wzcyfdtmlrsdtjfs' // generated ethereal password
             },
             tls: {
                 rejectUnauthorized: false
@@ -344,7 +344,7 @@ router.post('/PayPal', function(req, res) {
         // true for 465, false for other ports
         auth: {
             user: 'bakeryute@gmail.com', // generated ethereal user
-            pass: 'rqwufehgnrffjjfa' // generated ethereal password
+            pass: 'wzcyfdtmlrsdtjfs' // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false

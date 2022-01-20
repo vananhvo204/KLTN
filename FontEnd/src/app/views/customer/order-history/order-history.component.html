@@ -52,6 +52,7 @@ js-comp-ver-4.9.2 vc_responsive ">
                                                     <div class="col-sm-2"><span>Trạng thái</span>
                                                         <span *ngIf="order.paymentOption=='Cash'">Chờ Xác Nhận </span>
                                                         <span *ngIf="order.paymentOption=='Online'">Chờ Vận Chuyển </span>
+                                                        <span *ngIf="order.paymentOption=='MOMO'">Chờ Vận Chuyển </span>
                                                     </div>
                                                     <div class="col-sm-2" *ngIf="order.paymentOption=='Cash'">
                                                         <div class="box" style="padding:0px">

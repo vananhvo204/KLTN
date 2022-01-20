@@ -409,12 +409,12 @@
                 <!-- <h1>Shipping</h1> -->
                 <div class="wrap">
                     <ul class="list">
-                        <li *ngIf="isLoggedIn" class="active">1</li>
-                        <li *ngIf="isLoggedIn" class="active">2</li>
-                        <li *ngIf="isLoggedIn" class="active">3</li>
-                        <li *ngIf="!isLoggedIn">1</li>
-                        <li *ngIf="!isLoggedIn">2</li>
-                        <li *ngIf="!isLoggedIn">3</li>
+                        <li *ngIf="isLoggedIn" style="color: #ff0000 !important;" class="active">1</li>
+                        <li *ngIf="isLoggedIn" class="active" style="color: #ff0000 !important;">2</li>
+                        <!-- <li *ngIf="isLoggedIn" class="active">3</li> -->
+                        <li *ngIf="!isLoggedIn" style="color: #ff0000 !important;">1</li>
+                        <li *ngIf="!isLoggedIn" style="color: #ff0000 !important;">2</li>
+                        <li *ngIf="!isLoggedIn || isLoggedIn" style="color: #ff0000 !important;">3</li>
                     </ul>
 
                 </div>
@@ -449,13 +449,12 @@
                                 <agm-direction [origin]="origin" [destination]="destination"></agm-direction>
                             </agm-map>
                         </div>
-                        <h5>Địa Chỉ Cửa Hàng: 1098 Kha Vạn Cân, Linh Chiểu, Thủ Đức, Hồ Chí Minh, Việt Nam</h5>
+                        <h5>Địa Chỉ Cửa Hàng: Số 1, Võ Văn Ngân, Linh Chiểu, Thủ Đức, Hồ Chí Minh, Việt Nam</h5>
                         <h5>Địa Chỉ Giao Hàng: {{address}}</h5>
                         <h5>Khoảng cách: {{distanceShow/1000}}Km ==> Phí Ship: {{feeShip|currency:"VND"}}</h5>
                     </div>
-
-                    <div class="row" id="formLocation">
-                        <div class="col-sm-6" style="float: center;">
+                    
+                        <div class="col-sm-6"  id="formLocation" style="float: center;">
                             <div class="table-responsive" style="overflow-x:hidden;margin-top:10px;">
                                 <table class="table table-striped" style="color: black;">
 
@@ -567,7 +566,7 @@
                         </div>
 
 
-                    </div>
+                    
                     <div class="col-sm-6" *ngFor="let customer of allCustomer" style="padding: 10px;">
                         <div style="border-style: dotted ;border-width:2px; padding :10px;">
                             <b style="margin:0px;">{{customer.name}}</b>

@@ -50,7 +50,7 @@ router.post('/signup', function(req, res) {
                             // true for 465, false for other ports
                             auth: {
                                 user: 'bakeryute@gmail.com', // generated ethereal user
-                                pass: 'rqwufehgnrffjjfa' // generated ethereal password
+                                pass: 'wzcyfdtmlrsdtjfs' // generated ethereal password
                             },
                             tls: {
                                 rejectUnauthorized: false
