@@ -60,7 +60,8 @@ export class InsertCakeComponent implements OnInit {
       count: null,
       quantity:null,
       rate:null,
-      spdacbiet : false
+      spdacbiet : false,
+      inStock : false
     };
   }
   getCategoryList() {

@@ -9,5 +9,6 @@ export class Cake {
      count: number;
      quantity:Number;
      rate:Object;
-     spdacbiet:boolean
+     spdacbiet:boolean;
+     inStock : boolean
 }

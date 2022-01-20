@@ -33,12 +33,12 @@ export class DashboardComponent implements OnInit {
 
    barChartData = [];
   //Radar chart
-   radarChartLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
-   radarChartData = [
-    {data: [120, 130, 180, 70], label: '2017'},
-    {data: [90, 150, 200, 45], label: '2018'}
-  ];
-   radarChartType = 'radar';
+  //  radarChartLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  //  radarChartData = [
+  //   {data: [120, 130, 180, 70], label: '2017'},
+  //   {data: [90, 150, 200, 45], label: '2018'}
+  // ];
+   //radarChartType = 'radar';
 
  
   constructor(private _router: Router, private statisticService: StatisticService,private cakeService: CakeService,
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
   
     this.statisticService.TotalPriceOnYear(2021).subscribe(total => {
       this.totalYear = total["totalPriceOnYear"]
-      this.countCakeBuy = total["CountBoodBuy"]
+      this.countCakeBuy = total["CountCakeBuy"]
       this.countAllUser= total["CountUser"]
     }) 
     this.statisticService.BestUserOnYear(2021).subscribe(total => {

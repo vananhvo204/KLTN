@@ -45,7 +45,7 @@ export class UpdateCakeComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     console.log(id);
    this.getCakeById(id);
-   this.getSeriesList();
+  // this.getSeriesList();
     // var id = localStorage.getItem('idCategory');
     this.resetForm();
     // this.getCakeListById('5e5b3e2d7c63981214d8fc90');
@@ -67,7 +67,8 @@ export class UpdateCakeComponent implements OnInit {
       count: null,
       quantity:null,
       rate:null,
-      spdacbiet : false
+      spdacbiet : false,
+      inStock :false
     }
   }
   getCakeCategoryById(id:string) {
@@ -82,11 +83,11 @@ export class UpdateCakeComponent implements OnInit {
       console.log(res)
     });
   }
-  getSeriesList(){
-    this.seriService.getSeriList().subscribe(seri => {
-      this.seriService.seri = seri as Seri;
-    })
-  }
+  // getSeriesList(){
+  //   this.seriService.getSeriList().subscribe(seri => {
+  //     this.seriService.seri = seri as Seri;
+  //   })
+  // }
   getCategoryList() {
     this.categoryService.getCategoryList().subscribe((res) => {
 		  this.categoryService.categories = res as Category[];

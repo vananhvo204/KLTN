@@ -40,7 +40,8 @@ router.post('/',  function(req, res) {
     newcake.sale = req.body.sale;
     newcake.quantity = 100;
     newcake.rate = 0;
-    newcake.spdacbiet = false
+    newcake.spdacbiet = false;
+    newcake.inStock = false
     newcake.save(function(err, insertedcake) {
         if (err) {
             console.log('Err Saving cake');
@@ -64,7 +65,8 @@ router.put('/:id',  function(req, res) {
                     imgCake: req.body.imgCake,
                     sale: req.body.sale,
                     quantity: req.body.quantity,
-                    spdacbiet: req.body.spdacbiet
+                    spdacbiet: req.body.spdacbiet,
+                    inStock : req.body.inStock
                 }
             }, {
                 new: true
