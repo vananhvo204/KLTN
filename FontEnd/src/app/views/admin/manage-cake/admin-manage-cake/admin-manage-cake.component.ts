@@ -91,6 +91,7 @@ export class AdminManageCakeComponent implements OnInit {
   alertId(data) {
     console.log(data);
   }
+  
   alertSuccess: boolean = false;
   alertMessage: string = "";
   deleteCakeById(_id: string) {

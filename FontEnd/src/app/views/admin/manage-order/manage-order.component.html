@@ -21,6 +21,7 @@
                                         <li class="oh selected"><a type="button">Đơn Hàng Chờ Xác Nhận</a></li>
                                         <li class="fo"><a type="button">Đơn Hàng Đang Giao</a></li>
                                         <li class="com"><a type="button">Đơn Hàng Đã Giao</a></li>
+                                        <li class="cancel"><a type="button">Đơn Hàng Đã Huỷ</a></li>
                                     </ul>
                                 </div>
                                 <!-- new (Cash)-->
@@ -49,9 +50,24 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div *ngFor="let cus of list_all_customer">
+                                                                <div *ngIf="cus._id==order.customerID">
+                                                                    <span>Địa chỉ giao hàng</span><span>{{cus.address}}</span></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2"></div>
+                                                        
+                                                        <div class="col-sm-2">
+                                                            <div class="box" style="padding: 0;">
+                                                                <a (click)="ClickHuyDon(order)" class="btn-default">Huỷ Đơn</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="$index === expandedIndex">
+                                            <div *ngIf="$index === expandedIndex && !flag">
                                                 <div *ngFor="let orderDetail of list_OrderDetail">
                                                     <div class="box" *ngIf="orderDetail.orderID==order._id">
                                                         <div *ngFor="let cake of list_Cake">
@@ -185,7 +201,54 @@
 
                                 </div>
                                 <!-- end of future-orders -->
+                                <div id="cancel-orders">
+                                    <div *ngFor="let order of list_Order; let $index=index;">
+                                        <div class="order-container" style="margin-right: 15px;margin-left: -15px;" *ngIf="order.status=='Cancel'">
+                                            <div (click)="expandRow($index)">
+                                                <div class="header" style="margin-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><span>Ngày Đặt Hàng</span><span>{{order.orderDate}}</span></div>
+                                                        <div *ngIf="order.discountCode!=0" class="col-sm-3"><span>Tổng Đơn Hàng</span><span>{{order.totalPrice|currency:"VND"}} - {{(order.totalPrice*order.discountCode)/100|currency:"VND"}}({{order.discountCode}}%)={{(order.totalPrice*(100-order.discountCode))/100|currency:"VND"}}    </span></div>
+                                                        <div *ngIf="order.discountCode==0" class="col-sm-3"><span>Tổng Đơn Hàng</span><span>{{order.totalPrice|currency:"VND"}} </span></div>
+                                                        <div class="col-sm-2">
+                                                            <div *ngFor="let cus of list_all_customer">
+                                                                <div *ngIf="cus._id==order.customerID"><span>Người Đặt Hàng</span><span>{{cus.name}}</span></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2"></div>
+                                                        <div class="col-sm-2"><span>Trạng thái</span><span>Đã Huỷ</span></div>
 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="$index === expandedIndex">
+                                                <div *ngFor="let orderDetail of list_OrderDetail">
+                                                    <div class="box" *ngIf="orderDetail.orderID==order._id">
+                                                        <div *ngFor="let cake of list_Cake">
+                                                            <div class="row" *ngIf="cake._id==orderDetail.cakeID">
+                                                                <div class="col-sm-3">
+                                                                    <img style="border:0px" src={{cake.imgCake}} alt="" />
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <p>{{cake.nameCake}}</p>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <p>{{orderDetail.price|currency:"VND"}}</p>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <p>x {{orderDetail.count}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end of order-container -->
+
+
+                                </div>
                             </div>
                             <!-- container ends -->
                         </div>

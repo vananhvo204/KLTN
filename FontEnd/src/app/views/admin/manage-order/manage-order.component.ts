@@ -12,6 +12,7 @@ import { Point } from 'src/app/app-services/point-service/point.model';
 import { PointService } from 'src/app/app-services/point-service/point.service';
 import { DiscountCodeService } from 'src/app/app-services/discountCode-Service/discountCode.service';
 import { DiscountCode } from 'src/app/app-services/discountCode-Service/discountCode.model';
+import { fail } from 'assert';
 declare var $: any;
 @Component({
   selector: 'app-manage-order',
@@ -37,7 +38,7 @@ export class ManageOrderComponent implements OnInit {
   //thông tin login
   accountSocial = JSON.parse(localStorage.getItem('accountSocial'));
   statusLogin = localStorage.getItem('statusLogin');
-
+  flag : any
   ngOnInit() {
     this.script_Frontend();
   //   if (this.statusLogin == null) { this._router.navigate(['/account']);
@@ -46,6 +47,7 @@ export class ManageOrderComponent implements OnInit {
     this.getAllCustomer();
     this.getAllOrderDetail();
     this.getAllCake();
+    this.flag = false
 
     //set value giỏ hàng trên thanh head 
     this.getTotalCountAndPrice();
@@ -56,6 +58,8 @@ export class ManageOrderComponent implements OnInit {
   script_Frontend() {
     $('#future-orders').css('display', 'none');
     $('#done-orders').css('display', 'none');
+    $('#cancel-orders').css('display', 'none');
+
 
     $('#toggle-orders li').click(function () {
       $('#toggle-orders li').not(this).removeClass('selected');
@@ -67,18 +71,28 @@ export class ManageOrderComponent implements OnInit {
       $('#order-history').hide();
       $('#done-orders').hide();
       $('#future-orders').fadeIn('fast');
+      $('#cancel-orders').hide();
     });
 
     $('.oh').click(function () {
       $('#order-history').fadeIn('fast');
       $('#future-orders').hide();
       $('#done-orders').hide();
+      $('#cancel-orders').hide();
     });
 
     $('.com').click(function () {
       $('#order-history').hide();
       $('#future-orders').hide();
       $('#done-orders').fadeIn('fast');
+      $('#cancel-orders').hide();
+    });
+    $('.cancel').click(function () {
+      $('#order-history').hide();
+      $('#future-orders').hide();
+      $('#done-orders').hide();
+      $('#cancel-orders').fadeIn('fast');
+
     });
 
     $(function () {
@@ -161,8 +175,29 @@ export class ManageOrderComponent implements OnInit {
         this.ngOnInit();
 
       });
-  }
+  } 
+  alertSuccess: boolean = false;
+  alertMessage: string = "";
+  ClickHuyDon(orders: Order) {
+    this.flag = true
+    if (confirm('Bạn có muốn huỷ đơn hàng này không ?') == true){
+    orders.status = "Cancel";
+    this._order.putOrder(orders).subscribe(
+      order => {        
+        this.ngOnInit();
+        this.alertSuccess = true;
+        this.alertMessage = "Huỷ đơn hàng thành công!";
+        setTimeout(() => {
+        this.alertSuccess = false;
+        this.flag = false
+        this.alertMessage = "";
+        }, 2000);
+        error => console.log(error)
+      });    
+    }
+}
  
+  
   logout() {
     localStorage.clear();
     window.location.href = "/homePage";
