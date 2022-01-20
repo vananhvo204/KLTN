@@ -11,7 +11,10 @@ import { CategoryService } from 'src/app/app-services/category-service/category.
 import { Category } from 'src/app/app-services/category-service/category.model';
 import { SeriService } from 'src/app/app-services/seri-service/seri.service';
 import { Seri } from 'src/app/app-services/seri-service/seri.model';
-
+class Cake1{
+  _id: string;
+  inStock: Boolean;
+}
 @Component({
   selector: 'app-admin-manage-cake',
   templateUrl: './admin-manage-cake.component.html',
@@ -19,7 +22,7 @@ import { Seri } from 'src/app/app-services/seri-service/seri.model';
 })
 export class AdminManageCakeComponent implements OnInit {
   statusCRUD: String = ""
-  displayedColumns: string[] = ['imgCake', 'empty1', 'nameCake', 'priceCake', 'empty2', 'Details', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['imgCake', 'empty1', 'nameCake', 'priceCake', 'TrongKho','empty2', 'Details', 'Edit', 'Delete'];
   // dataSource: MatTableDataSource<Cake>;
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -29,6 +32,7 @@ export class AdminManageCakeComponent implements OnInit {
 
   }
   accountSocial = JSON.parse(localStorage.getItem("accountSocial"));
+  
   ngOnInit() {
     this.refreshCakesList();
 
@@ -58,7 +62,7 @@ export class AdminManageCakeComponent implements OnInit {
   cakes: any
   listCake = [];
   refreshCakesList() {
-    this.cakeService.getCakeList().subscribe((res) => {
+    this.cakeService.getCakeListAdmin().subscribe((res) => {
       this.cakes = res;
       this.dataSource.data = this.cakes;
       this.dataSource.paginator = this.paginator;
@@ -112,7 +116,27 @@ export class AdminManageCakeComponent implements OnInit {
   addCake() {
     this._router.navigate(['/insertCake']);
   }
-   
+  cake1: Cake = new Cake
+  Click(){
+    console.log("aaa")
+  }
+  ClickInStockTrue(_id){
+    this.cake1._id= _id
+    this.cake1.inStock = false
+    console.log("idtrue:" + _id)
+    this.UpdateInStock()
+    this.refreshCakesList()
+  }
+  ClickInStockFalse(_id){
+    this.cake1._id= _id
+    this.cake1.inStock = true
+    console.log("idfalse:" + _id)
+    this.UpdateInStock()
+    this.refreshCakesList()
+  }
+  UpdateInStock(){
+    this.cakeService.putCakeInStock(this.cake1).subscribe(res=>{console.log(res)},error => console.log(error))
+  }
   logout() {
     localStorage.clear();
     window.location.href = "/homePage";

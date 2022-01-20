@@ -57,7 +57,17 @@
                                                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;"> Giá Bánh </th>
                                                     <td mat-cell *matCellDef="let row"> {{ row.priceCake }}</td>
                                                 </ng-container>
-
+                                                <ng-container matColumnDef="TrongKho">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header >Trong Kho</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <input *ngIf="row.inStock == true" (click)="ClickInStockTrue(row._id)" style="margin-top:-8px;margin-left: 10px;" type="checkbox" checked > 
+                                                        <input *ngIf="row.inStock == false" (click)="ClickInStockFalse(row._id)" style="margin-top:-8px;margin-left: 10px;" type="checkbox">                                               
+                                                    </td>
+                                                    <!-- <td mat-cell *matCellDef="let element">
+                                                        <input *ngIf="element.TrongKho == true" (click)="ClickInStockTrue(element._id)" style="margin-top:-8px;margin-left: 10px;" type="checkbox" checked > 
+                                                        <input *ngIf="element.TrongKho == false" (click)="ClickInStockFalse(element._id)" style="margin-top:-8px;margin-left: 10px;" type="checkbox">                                               
+                                                    </td> -->
+                                                </ng-container>
                                                 <ng-container matColumnDef="empty2">
                                                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                                                     <td mat-cell *matCellDef="let row"></td>

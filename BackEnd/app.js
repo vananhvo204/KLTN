@@ -93,6 +93,7 @@ app.use(expressJWT({ secret: superSecret })
         path: [
             '/users/login',
             '/users/signup',
+            '/cakes/instock',
             /^\/cartCakes.*/,
             /^\/points.*/,
             /^\/promotions.*/,
@@ -109,6 +110,10 @@ app.use(expressJWT({ secret: superSecret })
             {
                 url: /^\/cakes.*/,
                 methods: ['GET', 'POST']
+            },
+            {
+                url: /^\/cakes.*/,
+                methods: ['GET', 'POST','PUT']
             },
             {
                 url: /^\/statistic.*/,

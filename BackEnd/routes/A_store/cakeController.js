@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const cake = require('../../models/A_store/cake');
 const user = require('../C_permission/userController')
-const promotion = require('../../models/F_event/promotion')
+const promotion = require('../../models/F_event/promotion');
+const { ConsoleMessage } = require('puppeteer');
 
 //cake
 //get all
@@ -13,11 +14,22 @@ router.get('/', function(req, res) {
             if (err) {
                 console.log("err req cakes");
             } else {
+                cakes = cakes.filter(cake => cake.inStock == true)
                 res.json(cakes);
             }
         });
 });
-
+router.get('/admin', function(req, res) {
+    console.log('get request for all cakes');
+    cake.find({})
+        .exec(function(err, cakes) {
+            if (err) {
+                console.log("err req cakes");
+            } else {              
+                res.json(cakes);
+            }
+        });
+});
 // get a person
 router.get('/:cakeID', function(req, res) {
     cake.findById(req.params.cakeID)
@@ -53,6 +65,32 @@ router.post('/',  function(req, res) {
 
 
 //update
+// router.put('/:id',  function(req, res) {
+//         if (req.body.sale == null || req.body.sale == "") req.body.sale = 0
+//         cake.findByIdAndUpdate(req.params.id, {
+
+//                 $set: {
+//                     nameCake: req.body.nameCake,
+//                     categoryID: req.body.categoryID,
+//                     priceCake: req.body.priceCake,
+//                     detailCake: req.body.detailCake,
+//                     imgCake: req.body.imgCake,
+//                     sale: req.body.sale,
+//                     quantity: req.body.quantity,
+//                     spdacbiet: req.body.spdacbiet,
+//                     inStock : req.body.inStock
+//                 }
+//             }, {
+//                 new: true
+//             },
+//             function(err, updatedcake) {
+//                 if (err) {
+//                     res.send("err Update");
+//                 } else {
+//                     res.json(updatedcake);
+//                 }
+//             })
+//     })
 router.put('/:id',  function(req, res) {
         if (req.body.sale == null || req.body.sale == "") req.body.sale = 0
         cake.findByIdAndUpdate(req.params.id, {
@@ -79,7 +117,36 @@ router.put('/:id',  function(req, res) {
                 }
             })
     })
-    //delete
+//udpate instock
+router.put('/instock/:id',  function(req, res) {  
+    cake.findByIdAndUpdate(req.params.id, {
+
+                        $set: {                           
+                            inStock : req.body.inStock
+                        }
+                    }, {
+                        new: true
+                    },
+                    function(err, updatedcake) {
+                        if (err) {
+                            res.send("err Update");
+                        } else {
+                            res.json(updatedcake);
+                        }
+                    })
+})
+async function UpdateInStock(id,check)
+ {
+    const Update = await cake.findByIdAndUpdate(id, {
+        $set: {
+            inStock: check,
+        }
+    }, {
+        new: true
+    })
+    return Update
+ }
+   //delete
 router.delete('/:id',  function(req, res) {
     cake.findByIdAndRemove(req.params.id, function(err, deletecake) {
         if (err) {
@@ -96,7 +163,9 @@ router.get('/findbycategory/:category_id', function(req, res) {
             })
             .exec(function(err, cakes) {
                 if (err) console.log("Error retrieving cakes");
-                else { res.json(cakes); }
+                else { 
+                    cakes = cakes.filter(cake => cake.inStock == true)
+                    res.json(cakes); }
             });
     })
 
@@ -108,7 +177,7 @@ router.get('/findbycategoryspecial/:category_id', function(req, res) {
             .exec(function(err, cakes) {
                 if (err) console.log("Error retrieving cakes");
                 else { 
-                    cakes = cakes.filter(cake => cake.spdacbiet == true);
+                    cakes = cakes.filter(cake => (cake.spdacbiet == true && cake.inStock == true));
                     res.json(cakes); }
             });
     })
@@ -120,7 +189,10 @@ router.post('/price', function(req, res) {
         })
         .exec(function(err, cakes) {
             if (err) console.log("Error retrieving cakes");
-            else { res.json(cakes); }
+            else {
+                cakes = cakes.filter(cake => cake.inStock == true)
+                 res.json(cakes); 
+                }
         });
 })
 router.post('/filter', function(req, res) {
@@ -134,14 +206,14 @@ router.post('/filter', function(req, res) {
                 console.log("err req cakes");
             } else {
                 if (req.body.category_id != null) {
-                    cakes = cakes.filter(cake => cake.categoryID == req.body.category_id);
+                    cakes = cakes.filter(cake => (cake.categoryID == req.body.category_id &&  cake.inStock == true));
 
                 }
                 if (req.body.price1 != null && req.body.price2 != null) {
                     cakes = cakes.filter(cake => (cake.priceCake >= req.body.price1 && cake.priceCake <= req.body.price2));
                 }
                 if (req.body.nameCake != null) {
-                    cakes = cakes.filter(cake => (removeAccents(cake.nameCake).toLowerCase().indexOf(removeAccents(req.body.nameCake).toLowerCase()) != -1));
+                    cakes = cakes.filter(cake => (removeAccents(cake.nameCake).toLowerCase().indexOf(removeAccents(req.body.nameCake).toLowerCase()) != -1 && cake.inStock == true));
                     console.log(cakes)
                 }
                 if (req.body.sortByPrice == "sortAscending") {
@@ -174,7 +246,6 @@ function removeAccents(str) {
   }
 
 // Xử lý thanh toán
-//Update QuantityBoook by CakeID & Quantity
 async function UpdateQuantityByCakeID(acake, cakeQuantityUpdate, res) {
 
     const Updatecake = await cake.findByIdAndUpdate(acake._id, {

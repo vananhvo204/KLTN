@@ -9,13 +9,22 @@ import { CakeFiter } from './cakefilter.model';
 export class CakeService {
   selectedCake: Cake;
   cake: Cake[];
+  cake1 : Cake = new Cake
+  
   constructor(private _http: HttpClient ,private _host:HostService) { }
   readonly baseURL = this._host.host()+':3000/cakes';
+  readonly baseURLAdmin = this._host.host()+':3000/cakes/admin';
   getCakeList() {
     return this._http.get(this.baseURL);
   }
+  getCakeListAdmin() {
+    return this._http.get(this.baseURLAdmin);
+  }
   putCake(cake: Cake) {
     return this._http.put(this.baseURL + `/${cake._id}`,cake);
+  }
+  putCakeInStock(cake1){
+    return this._http.put(this.baseURL + `/instock/${cake1._id}`,cake1);
   }
   getCakeById(_id: String) {
     return this._http.get(this.baseURL + "/" + _id);

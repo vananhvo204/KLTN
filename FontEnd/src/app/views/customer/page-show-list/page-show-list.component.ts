@@ -43,6 +43,7 @@ export class PageShowListComponent implements OnInit {
   favorite: Favorite = new Favorite
   listFavorite :any
   nameShow=""
+  nameShow1=""
   ngOnInit() {
     this.getAllFavoriteByUserId();
     $('.searchHeader').attr('style', 'font-size: 1.6rem !important');
@@ -64,6 +65,7 @@ export class PageShowListComponent implements OnInit {
     if(this.namefilter=="sale"){
       this.getCakeSale()
       this.nameShow = "Sản Phẩm Giảm Giá"
+      this.nameShow1 = "Sản Phẩm Giảm Giá"
     }
     
   
@@ -83,6 +85,7 @@ this.cakeService.getCakeByCategoryId(id).subscribe(ListCake=>{
 getNameCategroy(id){
     this.cakeCategoryService.getCategoryById(id).subscribe(aCategory=>{
       this.nameShow =aCategory["nameCategory"]
+      this.nameShow1 = "Loại sản phẩm"
     })
   }
   // check count cart before add (hover )
