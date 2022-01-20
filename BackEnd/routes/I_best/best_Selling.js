@@ -219,7 +219,7 @@ async function CustomRateOnCake(AllCake) {
 }
 
 
-//Show sách bán chạy nhất 2
+//Show banh bán chạy nhất 2
 router.get('/Cake', function(req, res) {
         async function run() {
             let CakeList = []

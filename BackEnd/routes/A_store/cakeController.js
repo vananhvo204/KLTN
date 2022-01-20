@@ -314,6 +314,7 @@ router.get('/getCakeSale/get', function(req, res) {
                 console.log("err req cakes");
             } else {
                 cakes = cakes.filter(cake => (cake.sale > 0));
+                
                 res.json(cakes);
             }
         });
