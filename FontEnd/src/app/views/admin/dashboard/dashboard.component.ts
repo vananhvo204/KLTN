@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit {
       this.doughnutChartType = 'doughnut';
     })
     this.totalMonth.yearCheck = "2021"
+    this.selectedYear = "2021"
     this.TotalPriceOnEachMonth();
   
     $('#field_month').addClass("readonly-wrapper");
@@ -111,6 +112,7 @@ export class DashboardComponent implements OnInit {
     this.statisticService.TotalPriceOnEachMonth(this.totalMonth).subscribe(res => {
       // this.TotalPriceByMonth = 
       //this.totalMonth.yearCheck = 
+      //yearCheck
       console.log("res: "+this.totalMonth.yearCheck)
       this.barChartOptions = {
         scaleShowVerticalLines: false,
@@ -227,12 +229,13 @@ export class DashboardComponent implements OnInit {
     })
 } 
 //nếu có cả tháng và năm
-if(this.selectedMonth!=null && this.clickMonth==true){
+if(this.selectedMonth != null && this.clickMonth==true){
   console.log("vào có năm và tháng")
   
   this.totalMonth.yearCheck = this.selectedYear
     this.totalMonth.monthCheck = this.selectedMonth
-    console.log(this.totalMonth)
+    console.log("aa"+this.totalMonth.monthCheck)
+    console.log("aa"+this.totalMonth.yearCheck)
     //TotalMonth include yearCheck and monthCheck
     this.statisticService.TotalPriceOnMonth(this.totalMonth).subscribe(total => {
   

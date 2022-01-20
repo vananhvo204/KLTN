@@ -295,7 +295,7 @@ router.post('/PayPal', function(req, res) {
     }
     output = output + ` </tbody>
     </table>
-    <h3>INFORMATION PAYMENT BOOKSTORE</h3>
+    <h3>INFORMATION PAYMENT CAKESTORE</h3>
     <table style="width:50%;">
       <thead>
           <tr>

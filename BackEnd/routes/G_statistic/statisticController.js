@@ -69,7 +69,7 @@ async function checkWeek(dateNow, dateCheck) { //theo tuần
 
 //check theo month
 async function checkMonth(yearCheck, monthCheck, dateOrder) {
-    console.log("1")
+   
     let run = (yearCheck, monthCheck, dateOrder) => {
         month = {
             "Jan": 1,
@@ -86,11 +86,11 @@ async function checkMonth(yearCheck, monthCheck, dateOrder) {
             "Dec": 12
         }
         var checkSplit = dateOrder.split(" ");
-        console.log("nam: "+ checkSplit[3])
+        
         if (yearCheck == checkSplit[3]) { //năm =
-            console.log("aaa: "+ checkSplit[1])
+            
             if (month[monthCheck] == month[checkSplit[1]]) { //tháng =
-                console.log("2")
+                
                 return true;
             }
         }
